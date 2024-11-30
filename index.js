@@ -1,5 +1,6 @@
 const { Telegraf } = require('telegraf');
 const path = require('path');
+const express = require('express');
 require('dotenv').config();
 
 // Initialize bot with your token
@@ -238,3 +239,10 @@ bot.on('callback_query', async (ctx) => {
 
 // Start the bot
 bot.launch();
+
+
+// Bind the express server to a specific port
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
