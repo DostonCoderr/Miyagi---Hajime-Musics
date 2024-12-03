@@ -2,6 +2,8 @@ const { Telegraf } = require('telegraf');
 const path = require('path');
 const express = require('express');
 require('dotenv').config();
+const app = express();
+
 
 // Initialize bot with your token
 const bot = new Telegraf(process.env.BOT_TOKEN);
