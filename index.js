@@ -5,10 +5,10 @@ require('dotenv').config();
 const app = express();
 
 
-// Initialize bot with your token
+
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// Define the music folder path
+
 const musicFolderPath = path.join(__dirname, 'music', 'miyagi-endshpil');
 
 const websiteUrl = 'https://miyagi.dostoncoder.uz';
@@ -125,7 +125,7 @@ const messages = {
 
 let currentLanguage = 'en';
 
-// Command to start the bot and show language options
+
 bot.command('start', (ctx) => {
   ctx.reply(messages[currentLanguage].languageChoice, {
     reply_markup: {
@@ -138,7 +138,7 @@ bot.command('start', (ctx) => {
   });
 });
 
-// Command to display help message
+
 bot.command('help', (ctx) => {
   ctx.reply(messages[currentLanguage].help, {
     parse_mode: 'Markdown',
@@ -150,7 +150,7 @@ bot.command('help', (ctx) => {
   });
 });
 
-// Command to go back to the main menu
+
 bot.command('back', (ctx) => {
   ctx.reply(messages[currentLanguage].backToMenu, {
     reply_markup: {
@@ -161,8 +161,8 @@ bot.command('back', (ctx) => {
   });
 });
 
-// Handle language selection
-// Language Selection Fix
+
+
 bot.on('callback_query', async (ctx) => {
   const data = ctx.callbackQuery.data;
 
@@ -239,11 +239,24 @@ bot.on('callback_query', async (ctx) => {
 });
 
 
-// Start the bot
+
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
+setInterval(() => {
+  axios.get(`http://localhost:${PORT}/health`)
+    .then(() => console.log('Keep-alive ping sent'))
+    .catch(err => console.error('Keep-alive ping failed:', err));
+}, 300000); 
+
+
 bot.launch();
 
 
-// Bind the express server to a specific port
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
