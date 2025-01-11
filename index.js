@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 require('dotenv').config();
 const app = express();
+const axios = require('axios'); // Use require for consistency
 
 
 
@@ -246,18 +247,18 @@ app.get('/health', (req, res) => {
 });
 
 
-setInterval(() => {
-  axios.get(`http://localhost:${PORT}/health`)
-    .then(() => console.log('Keep-alive ping sent'))
-    .catch(err => console.error('Keep-alive ping failed:', err));
-}, 300000); 
+setTimeout(() => {
+  axios.get(`http://127.0.0.1:${PORT}/health`)
+    .then(() => console.log('Health check passed'))
+    .catch((err) => console.error('Health check failed', err));
+}, 5000);
 
 
 bot.launch();
 
 
+const PORT = process.env.PORT || 10000;
 
-const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
