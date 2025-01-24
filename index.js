@@ -248,7 +248,7 @@ app.get('/health', (req, res) => {
 
 
 setTimeout(() => {
-  axios.get(`http://127.0.0.1:${PORT}/health`)
+  axios.get(`http://localhost:${PORT}/health`)
     .then(() => console.log('Health check passed'))
     .catch((err) => console.error('Health check failed', err));
 }, 5000);
